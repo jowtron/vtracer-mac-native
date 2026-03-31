@@ -24,10 +24,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+          targets: ${{ matrix.platform == 'macos-latest' && 'universal-apple-darwin' || '' }}
 
       - name: Cache cargo
         uses: Swatinem/rust-cache@v2
@@ -41,7 +46,7 @@ jobs:
         with:
           tagName: v${{ inputs.version }}
           releaseName: 'vTracer Native v${{ inputs.version }}'
-          releaseBody: 'See the assets to download this version and install.'
-          releaseDraft: true
+          releaseBody: 'Release version ${{ inputs.version }}.'
+          releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
