@@ -1,0 +1,26 @@
+[package]
+name = "vtracer-app"
+version = "0.1.0"
+description = "VTracer Clone App"
+authors = ["Joseph"]
+edition = "2021"
+
+
+[dependencies]
+tauri = { version = "2.0", features = [] }
+tauri-plugin-shell = "2.0"
+tauri-plugin-dialog = "2.0"
+tauri-plugin-fs = "2.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+vtracer = "0.6"
+visioncortex = "0.8"
+image = "0.24"
+base64 = "0.21"
+
+[build-dependencies]
+tauri-build = { version = "2.0", features = [] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

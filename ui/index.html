@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vTracer Clone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <h2>vTracer Controls</h2>
+            
+            <section class="control-group">
+                <h3>Clustering</h3>
+                <div class="control">
+                    <label title="[ B/W ]&#10;Traces a single high-contrast path.&#10;&#10;[ Color ]&#10;Clusters similar colors into multiple layered paths.">Mode</label>
+                    <div class="toggle-group" id="mode-group">
+                        <div class="toggle-slider"></div>
+                        <button id="mode-bw" class="toggle-btn" data-index="0">B/W</button>
+                        <button id="mode-color" class="toggle-btn active" data-index="1">Color</button>
+                    </div>
+                </div>
+                <div class="control">
+                    <label title="[ Stacked ]&#10;Draws larger shapes at the bottom and layers smaller ones on top (avoids white gaps).&#10;&#10;[ Cutout ]&#10;Makes shapes non-overlapping puzzle pieces.">Hierarchy</label>
+                    <div class="toggle-group" id="hier-group">
+                        <div class="toggle-slider"></div>
+                        <button id="hier-cutout" class="toggle-btn" data-index="0">Cutout</button>
+                        <button id="hier-stacked" class="toggle-btn active" data-index="1">Stacked</button>
+                    </div>
+                </div>
+                
+                <div class="control">
+                    <label title="[ Filter Speckle ]&#10;Discards noise and small details smaller than this many pixels. Higher values produce a cleaner, more simplified image.">Filter Speckle</label>
+                    <input type="range" id="filter-speckle" min="1" max="64" value="4">
+                    <span class="val">4</span>
+                </div>
+                <div class="control">
+                    <label title="[ Color Precision ]&#10;Number of significant bits used for color clustering. Lower values group more colors together, reducing total colors.">Color Precision</label>
+                    <input type="range" id="color-precision" min="1" max="8" value="6">
+                    <span class="val">6</span>
+                </div>
+                <div class="control">
+                    <label title="[ Gradient Step ]&#10;Color difference threshold for gradient layers. Higher values merge similar shades into fewer layers.">Gradient Step</label>
+                    <input type="range" id="gradient-step" min="1" max="64" value="16">
+                    <span class="val">16</span>
+                </div>
+            </section>
+
+            <section class="control-group">
+                <h3>Curve Fitting</h3>
+                <div class="control">
+                    <label title="[ Pixel ]&#10;Follows the exact image grid.&#10;&#10;[ Polygon ]&#10;Fits straight lines.&#10;&#10;[ Spline ]&#10;Creates smooth bezier curves.">Simplification</label>
+                    <div class="toggle-group" id="sim-group">
+                        <div class="toggle-slider"></div>
+                        <button id="sim-pixel" class="toggle-btn active" data-index="0">Pixel</button>
+                        <button id="sim-polygon" class="toggle-btn" data-index="1">Polygon</button>
+                        <button id="sim-spline" class="toggle-btn" data-index="2">Spline</button>
+                    </div>
+                </div>
+                <div class="control">
+                    <label title="[ Corner Threshold ]&#10;Minimum momentary angle (in degrees) to be considered a sharp corner instead of being smoothed out.">Corner Threshold</label>
+                    <input type="range" id="corner-threshold" min="0" max="180" value="60">
+                    <span class="val">60°</span>
+                </div>
+                <div class="control">
+                    <label title="[ Segment Length ]&#10;Target length of simplified curve segments. Higher values create coarser, blockier shapes.">Segment Length</label>
+                    <input type="range" id="segment-length" min="1" max="20" step="0.5" value="4.0">
+                    <span class="val">4.0</span>
+                </div>
+                <div class="control">
+                    <label title="[ Splice Threshold ]&#10;Minimum angle displacement (in degrees) required to splice a spline curve.">Splice Threshold</label>
+                    <input type="range" id="splice-threshold" min="0" max="180" value="45">
+                    <span class="val">45°</span>
+                </div>
+                <div class="control">
+                    <label title="[ Path Precision ]&#10;Number of decimal places in the final SVG path coordinates. Lower values reduce file size but may decrease precision.">Path Precision</label>
+                    <input type="range" id="path-precision" min="0" max="10" value="2">
+                    <span class="val">2</span>
+                </div>
+            </section>
+
+            <button id="download-btn" class="primary-btn" disabled>Download as SVG</button>
+        </aside>
+
+        <main class="preview-area" id="drop-zone">
+            
+            <div id="view-controls" class="view-controls" style="display: none;">
+                <div class="toggle-group" id="view-group">
+                    <div class="toggle-slider"></div>
+                    <button id="view-original" class="toggle-btn" data-index="0">Original</button>
+                    <button id="view-svg" class="toggle-btn active" data-index="1">Vectorized</button>
+                </div>
+            </div>
+
+            <div id="placeholder" class="placeholder">
+                <p>Drag & Drop JPG/PNG here</p>
+                <input type="file" id="file-input" hidden accept="image/png,image/jpeg">
+                <button class="browse-btn" onclick="document.getElementById('file-input').click()">Or Browse</button>
+            </div>
+            
+            <div id="loading-overlay" class="loading-overlay" style="display: none;">
+                <div class="spinner"></div>
+                <span>Processing...</span>
+            </div>
+
+            <div id="media-container" class="media-container" style="display: none;">
+                <img id="original-img" class="media-layer" style="display: none;">
+                <div id="svg-container" class="media-layer"></div>
+            </div>
+        </main>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+/Users/joseph/GEMINI/vTracer/src-tauri/target/debug/test_trace: /Users/joseph/GEMINI/vTracer/src-tauri/build.rs /Users/joseph/GEMINI/vTracer/src-tauri/capabilities /Users/joseph/GEMINI/vTracer/src-tauri/src/test_trace.rs /Users/joseph/GEMINI/vTracer/src-tauri/tauri.conf.json
