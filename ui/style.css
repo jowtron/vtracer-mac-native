@@ -55,6 +55,7 @@ h3 { font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--
 
 .control { margin-bottom: 15px; }
 .control label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; cursor: help; }
+.short-desc { font-weight: normal; font-size: 11px; color: var(--tooltip-color); font-style: italic; margin-left: 5px; }
 
 /* Animated Segmented Control */
 .toggle-group { 

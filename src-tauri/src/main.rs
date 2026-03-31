@@ -30,25 +30,34 @@ async fn trace_image(params: TraceParams) -> Result<String, String> {
         .decode(&params.image_base64)
         .map_err(|e| format!("Failed to decode base64: {}", e))?;
 
-    // Load image using image crate
-    let img = image::load_from_memory(&data)
-        .map_err(|e| format!("Failed to load image: {}", e))?;
-    
-    let mut img_rgba8 = img.into_rgba8();
-    let width = img_rgba8.width() as usize;
-    let height = img_rgba8.height() as usize;
+    // Try loading with standard image crate first (PNG, JPG, WebP, etc.)
+    let pixels_data = match image::load_from_memory(&data) {
+        Ok(img) => {
+            let mut img_rgba8 = img.into_rgba8();
+            let width = img_rgba8.width() as usize;
+            let height = img_rgba8.height() as usize;
+            
+            // Blend over white background
+            for pixel in img_rgba8.pixels_mut() {
+                let alpha = pixel[3] as f32 / 255.0;
+                let inv_alpha = 1.0 - alpha;
+                pixel[0] = ((pixel[0] as f32 * alpha) + (255.0 * inv_alpha)) as u8;
+                pixel[1] = ((pixel[1] as f32 * alpha) + (255.0 * inv_alpha)) as u8;
+                pixel[2] = ((pixel[2] as f32 * alpha) + (255.0 * inv_alpha)) as u8;
+                pixel[3] = 255;
+            }
+            (img_rgba8.into_raw(), width, height)
+        },
+        Err(e) => {
+            // Fallback to HEIC decoder for iPhone photos
+            match heic::DecoderConfig::new().decode(&data, heic::PixelLayout::Rgba8) {
+                Ok(heic_img) => (heic_img.data, heic_img.width, heic_img.height),
+                Err(_) => return Err(format!("Unsupported image format. Error: {}", e)),
+            }
+        }
+    };
 
-    // Blend over white background to prevent transparent areas from becoming black
-    for pixel in img_rgba8.pixels_mut() {
-        let alpha = pixel[3] as f32 / 255.0;
-        let inv_alpha = 1.0 - alpha;
-        pixel[0] = ((pixel[0] as f32 * alpha) + (255.0 * inv_alpha)) as u8;
-        pixel[1] = ((pixel[1] as f32 * alpha) + (255.0 * inv_alpha)) as u8;
-        pixel[2] = ((pixel[2] as f32 * alpha) + (255.0 * inv_alpha)) as u8;
-        pixel[3] = 255;
-    }
-
-    let pixels = img_rgba8.into_raw();
+    let (pixels, width, height) = pixels_data;
 
     // Map parameters to vtracer::Config
     let color_mode = if params.is_color {

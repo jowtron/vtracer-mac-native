@@ -55,6 +55,7 @@ function init() {
     updateToggleSlider(els.hierStacked);
     updateToggleSlider(els.simPixel);
     updateToggleSlider(els.viewSvg);
+    updateSplineVisibility();
 }
 
 function setupDragAndDrop() {
@@ -68,8 +69,11 @@ function setupDragAndDrop() {
 
     els.dropZone.addEventListener('drop', e => {
         const file = e.dataTransfer.files[0];
-        if (file && file.type.startsWith('image/')) {
-            loadFile(file);
+        if (file) {
+            const ext = file.name.split('.').pop().toLowerCase();
+            if (file.type.startsWith('image/') || ['heic', 'heif'].includes(ext)) {
+                loadFile(file);
+            }
         }
     });
 
@@ -110,15 +114,24 @@ function updateToggleSlider(activeBtn) {
     slider.style.transform = `translateX(calc(${index * 100}% + ${index * 6}px))`;
 }
 
+function updateSplineVisibility() {
+    const splineGroup = document.getElementById('spline-controls');
+    if (state.simplifyMode === 'spline') {
+        splineGroup.style.display = 'block';
+    } else {
+        splineGroup.style.display = 'none';
+    }
+}
+
 function setupControls() {
     // Control Toggles
     els.modeBw.onclick = (e) => { state.isColor = false; updateToggleSlider(e.target); triggerTrace(); };
     els.modeColor.onclick = (e) => { state.isColor = true; updateToggleSlider(e.target); triggerTrace(); };
     els.hierCutout.onclick = (e) => { state.isStacked = false; updateToggleSlider(e.target); triggerTrace(); };
     els.hierStacked.onclick = (e) => { state.isStacked = true; updateToggleSlider(e.target); triggerTrace(); };
-    els.simPixel.onclick = (e) => { state.simplifyMode = 'pixel'; updateToggleSlider(e.target); triggerTrace(); };
-    els.simPolygon.onclick = (e) => { state.simplifyMode = 'polygon'; updateToggleSlider(e.target); triggerTrace(); };
-    els.simSpline.onclick = (e) => { state.simplifyMode = 'spline'; updateToggleSlider(e.target); triggerTrace(); };
+    els.simPixel.onclick = (e) => { state.simplifyMode = 'pixel'; updateToggleSlider(e.target); updateSplineVisibility(); triggerTrace(); };
+    els.simPolygon.onclick = (e) => { state.simplifyMode = 'polygon'; updateToggleSlider(e.target); updateSplineVisibility(); triggerTrace(); };
+    els.simSpline.onclick = (e) => { state.simplifyMode = 'spline'; updateToggleSlider(e.target); updateSplineVisibility(); triggerTrace(); };
 
     // View Toggles
     els.viewOriginal.onclick = (e) => { 

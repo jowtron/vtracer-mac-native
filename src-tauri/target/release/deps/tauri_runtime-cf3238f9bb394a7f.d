@@ -1,0 +1,11 @@
+/Users/joseph/GEMINI/vTracer/src-tauri/target/release/deps/tauri_runtime-cf3238f9bb394a7f.d: /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/lib.rs /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/dpi.rs /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/monitor.rs /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/webview.rs /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/window.rs
+
+/Users/joseph/GEMINI/vTracer/src-tauri/target/release/deps/libtauri_runtime-cf3238f9bb394a7f.rlib: /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/lib.rs /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/dpi.rs /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/monitor.rs /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/webview.rs /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/window.rs
+
+/Users/joseph/GEMINI/vTracer/src-tauri/target/release/deps/libtauri_runtime-cf3238f9bb394a7f.rmeta: /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/lib.rs /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/dpi.rs /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/monitor.rs /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/webview.rs /Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/window.rs
+
+/Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/lib.rs:
+/Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/dpi.rs:
+/Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/monitor.rs:
+/Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/webview.rs:
+/Users/joseph/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tauri-runtime-2.10.1/src/window.rs:
