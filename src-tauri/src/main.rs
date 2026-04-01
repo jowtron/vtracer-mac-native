@@ -51,7 +51,7 @@ async fn trace_image(params: TraceParams) -> Result<String, String> {
         Err(e) => {
             // Fallback to HEIC decoder for iPhone photos
             match heic::DecoderConfig::new().decode(&data, heic::PixelLayout::Rgba8) {
-                Ok(heic_img) => (heic_img.data, heic_img.width, heic_img.height),
+                Ok(heic_img) => (heic_img.data, heic_img.width as usize, heic_img.height as usize),
                 Err(_) => return Err(format!("Unsupported image format. Error: {}", e)),
             }
         }
