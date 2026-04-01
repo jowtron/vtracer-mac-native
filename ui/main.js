@@ -14,6 +14,7 @@ const els = {
     originalImg: document.getElementById('original-img'),
     mediaContainer: document.getElementById('media-container'),
     downloadBtn: document.getElementById('download-btn'),
+    resetBtn: document.getElementById('reset-btn'),
     loadingOverlay: document.getElementById('loading-overlay'),
     viewControls: document.getElementById('view-controls'),
     
@@ -44,6 +45,19 @@ const state = {
     isStacked: true,
     simplifyMode: 'pixel',
     viewMode: 'svg'
+};
+
+const defaults = {
+    isColor: true,
+    isStacked: true,
+    simplifyMode: 'pixel',
+    filterSpeckle: 4,
+    colorPrecision: 6,
+    gradientStep: 16,
+    cornerThreshold: 60,
+    segmentLength: 4.0,
+    spliceThreshold: 45,
+    pathPrecision: 2
 };
 
 function init() {
@@ -123,6 +137,41 @@ function updateSplineVisibility() {
     }
 }
 
+function resetToDefaults() {
+    state.isColor = defaults.isColor;
+    state.isStacked = defaults.isStacked;
+    state.simplifyMode = defaults.simplifyMode;
+
+    updateToggleSlider(state.isColor ? els.modeColor : els.modeBw);
+    updateToggleSlider(state.isStacked ? els.hierStacked : els.hierCutout);
+    
+    if (state.simplifyMode === 'pixel') updateToggleSlider(els.simPixel);
+    else if (state.simplifyMode === 'polygon') updateToggleSlider(els.simPolygon);
+    else updateToggleSlider(els.simSpline);
+
+    els.filterSpeckle.value = defaults.filterSpeckle;
+    els.colorPrecision.value = defaults.colorPrecision;
+    els.gradientStep.value = defaults.gradientStep;
+    els.cornerThreshold.value = defaults.cornerThreshold;
+    els.segmentLength.value = defaults.segmentLength;
+    els.spliceThreshold.value = defaults.spliceThreshold;
+    els.pathPrecision.value = defaults.pathPrecision;
+
+    // Update value displays
+    [
+        els.filterSpeckle, els.colorPrecision, els.gradientStep, 
+        els.cornerThreshold, els.segmentLength, els.spliceThreshold, els.pathPrecision
+    ].forEach(input => {
+        const valSpan = input.parentElement.querySelector('.val');
+        let val = input.value;
+        if (input.id === 'corner-threshold' || input.id === 'splice-threshold') val += '°';
+        valSpan.textContent = val;
+    });
+
+    updateSplineVisibility();
+    triggerTrace();
+}
+
 function setupControls() {
     // Control Toggles
     els.modeBw.onclick = (e) => { state.isColor = false; updateToggleSlider(e.target); triggerTrace(); };
@@ -145,6 +194,10 @@ function setupControls() {
         updateToggleSlider(e.target); 
         els.originalImg.style.display = 'none';
         els.svgContainer.style.display = 'block';
+    };
+
+    els.resetBtn.onclick = () => {
+        resetToDefaults();
     };
 
     // Sliders
