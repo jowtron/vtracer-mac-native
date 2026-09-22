@@ -1,5 +1,7 @@
 # vTracer Native Clone
 
+[![Latest release](https://img.shields.io/github/v/release/jowtron/vtracer-mac-native)](https://github.com/jowtron/vtracer-mac-native/releases/latest)
+
 A lightweight, native macOS desktop application that serves as a graphical frontend for the [vtracer](https://github.com/visioncortex/vtracer) vectorization engine. It provides a 1:1 functional replica of the web interface, but runs entirely natively and offline using Tauri and Rust.
 
 ## Features
